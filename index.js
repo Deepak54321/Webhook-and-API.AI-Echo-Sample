@@ -29,15 +29,7 @@ function mymethod(req, res) {
                             'Test Drive',
                             'Complaints',
                             'Yamaha News'],
-                'type': 2},
-                  {             
-                    'imageUrl': 'https://static.pexels.com/photos/34950/pexels-photo.jpg',
-                        'type': 3,
-                  },
-                  {
-                     'speech': 'look at that image',
-                      'type': 0,
-                    }
+                'type': 2}
               ],
               'source': 'dimwei.com'});
 }
