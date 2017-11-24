@@ -30,10 +30,14 @@ function mymethod(req, res) {
                             'Complaints',
                             'Yamaha News'],
                 'type': 2},
+                  {             
+                    'imageUrl': 'https://static.pexels.com/photos/34950/pexels-photo.jpg',
+                        'type': 3,
+                  },
                   {
-                      "type": 3,
-                    "imageUrl": "https://static.pexels.com/photos/34950/pexels-photo.jpg"
-                  }
+                     'speech': 'look at that image',
+                      'type': 0,
+                    }
               ],
               'source': 'dimwei.com'});
 }
