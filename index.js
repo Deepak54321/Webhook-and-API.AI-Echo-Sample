@@ -24,11 +24,11 @@ function mymethod(req, res) {
               'displayText': 'When',
               'messages': 
               [
-               {'title': 'when',
-                'replies': ['12:00',
-                            '13:00',
-                            '17:00',
-                            '18:00'],
+               {'title': 'Please choose one of the following options',
+                'replies': ['Product Enquiry',
+                            'Test Drive',
+                            'Complaints',
+                            'Yamaha News'],
                 'type': 2}],
               'source': 'dimwei.com'});
 }
