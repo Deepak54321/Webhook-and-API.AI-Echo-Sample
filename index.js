@@ -9,15 +9,28 @@ restService.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
+
 restService.use(bodyParser.json());
 function mymethod(req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     var demo="Demo New";
-    return res.json({
+    /*return res.json({
         speech: demo,
         displayText: demo,
         source: 'webhook-echo-sample'
-    });
+    });*/
+    res.json({'speech': 'When',
+              'displayText': 'When',
+              'messages': 
+              [
+               {'title': 'when',
+                'replies': ['12:00',
+                            '13:00',
+                            '17:00',
+                            '18:00'],
+                'type': 2}],
+              'source': 'dimwei.com'});
 }
 restService.post('/echo', mymethod);
 
