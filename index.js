@@ -29,7 +29,12 @@ function mymethod(req, res) {
                             'Test Drive',
                             'Complaints',
                             'Yamaha News'],
-                'type': 2}],
+                'type': 2},
+                  {
+                      "type": 3,
+                    "imageUrl": "https://static.pexels.com/photos/34950/pexels-photo.jpg"
+                  }
+              ],
               'source': 'dimwei.com'});
 }
 restService.post('/echo', mymethod);
