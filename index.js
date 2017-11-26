@@ -16,7 +16,8 @@ restService.use(bodyParser.json());
 restService.post('/echo', function (req, res) {
     //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     //var demo="Demo New";
-	if(req.get("result").get("action")=="demo")
+	var action = request.body.result.action;
+	if(action=="demo")
 	{
 			        res.json({'speech': 'When',
               'displayText': 'When',
