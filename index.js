@@ -16,7 +16,7 @@ function mymethod(req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     var demo="Demo New";
     var action=req.get("result").get("action");	
-	switch(action)
+	/*switch(action)
 	       {
 		       case "demo":
 			        res.json({'speech': 'When',
@@ -58,7 +58,7 @@ function mymethod(req, res) {
 			       break;
 			        default:
 			       console.log("abc");
-	       }
+	       }*/
 			       
    }
 
