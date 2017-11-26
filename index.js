@@ -16,6 +16,21 @@ function mymethod(req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     var demo="Demo New";
     var action=req.get("result").get("action");	
+	if(action=='demo')
+	{
+			        res.json({'speech': 'When',
+              'displayText': 'When',
+              'messages': 
+              [
+               {'title': 'Please choose one of the following options',
+                'replies': ['Product Enquiry',
+                            'Test Drive',
+                            'Complaints',
+                            'Yamaha News'],
+                'type': 2}
+              ],
+              'source': 'dimwei.com'});
+	}
 	/*switch(action)
 	       {
 		       case "demo":
