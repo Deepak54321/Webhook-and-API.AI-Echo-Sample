@@ -1,96 +1,24 @@
-# -*- coding:utf8 -*-
-# !/usr/bin/env python
-# Copyright 2017 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+'use strict';
 
-from __future__ import print_function
-from future.standard_library import install_aliases
-install_aliases()
+const express = require('express');
+const bodyParser = require('body-parser');
 
-from urllib.parse import urlparse, urlencode
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
+const restService = express();
 
-import json
-import os
-
-from flask import Flask
-from flask import request
-from flask import make_response
-
-# Flask app should start in global layout
-app = Flask(__name__)
+restService.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    req = request.get_json(silent=True, force=True)
 
-    print("Request:")
-    print(json.dumps(req, indent=4))
+restService.use(bodyParser.json());
 
-    res = processRequest(req)
-    res = json.dumps(res, indent=4)
-    # print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
-
-def processRequest(req):
-	if req.get("result").get("action") =="Priceapi":
-		baseurl = "http://www.yamaha-motor-india.com/iym-web-api//51DCDFC2A2BC9/statewiseprice/getprice?product_profile_id=salutorxspcol&state_id=240"
-		full_url = baseurl  
-		result = urlopen(full_url).read()
-		data = json.loads(result)
-		responseData = data.get('responseData')
-		product_price = responseData.get('product_price')
-		price = product_price[0]['price']	
-		speech = 'Price is ' + price		
-		return {
-        		"speech": speech,
-        		"displayText": speech,
-       			# "data": data,
-        		# "contextOut": [],
-        		"source": "apiai-weather-webhook-sample"
-    			}
-	if req.get("result").get("action") =="Dealerapi":
-		result = req.get("result")
-		parameters = result.get("parameters")
-		state=parameters.get('State')
-		city=parameters.get('geo-city')
-		baseurl = "http://www.yamaha-motor-india.com/iym-web-api//51DCDFC2A2BC9/network/search?type=sales&profile_id=gujarat&city_profile_id=ahmedabad"
-		full_url = baseurl  
-		result = urlopen(full_url).read()
-		data = json.loads(result)
-		responseData = data.get('responseData')
-		speech=""
-		dealers = responseData.get('dealers')
-		if dealers is None:
-			speech="No Dealer Found in your city please check the city you entered"		
-		for i in range(len(dealers)):
-			dealername = dealers[i]['dealer_name']
-			dealeraddress=dealers[i]['dealer_address']
-			dealersalmgrmob=dealers[i]['sales_manager_mobile']
-			speech+='Dealer name :' + dealername + '\n'  + 'Dealer Address :' + dealeraddress + '\n'  + 'Dealer Salese Manager Mobile No :' + dealersalmgrmob + '\n' + '\n' 
-		return {
-			"speech":speech,
-			"displayText":speech,
-			}
-	if req.get("result").get("action") =="intro":
-	    return {
-		      'speech': 'When',
+restService.post('/echo', function (req, res) {
+    //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
+    //var demo="Demo New";
+	if(req.get("result").get("action")=="demo")
+	{
+			        res.json({'speech': 'When',
               'displayText': 'When',
               'messages': 
               [
@@ -101,12 +29,113 @@ def processRequest(req):
                             'Yamaha News'],
                 'type': 2}
               ],
-              'source': 'dimwei.com'
-		}
-	
-if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+              'source': 'dimwei.com'});
+	}
+	/*switch(action)
+	       {
+		       case "demo":
+			        res.json({'speech': 'When',
+              'displayText': 'When',
+              'messages': 
+              [
+               {'title': 'Please choose one of the following options',
+                'replies': ['Product Enquiry',
+                            'Test Drive',
+                            'Complaints',
+                            'Yamaha News'],
+                'type': 2}
+              ],
+              'source': 'dimwei.com'});
+			       break;
+			     case "price"
+			       var request = require('request');
+            request({
+                url:'http://www.yamaha-motor-india.com/iym-web-api//51DCDFC2A2BC9/statewiseprice/getprice?product_profile_id=salutorxspcol&state_id=240'
+            },function (error,response,body) {
+                if (!error && response.statusCode == 200) {
+                    var result = JSON.parse(body);
+                    var responseCode=result.responseData;
+                    var productPrice=responseCode.product_price;
+                    var price=productPrice[0].price +'Rs';
+                   // var webhookReply = 'Hello ' + userName + '! Welcome from the webhook.'
 
-    print("Starting app on port %d" % port)
+  // the most basic response
+                res.status(200).json({
+                source: 'webhook',
+                speech: price,
+                displayText: price
+           });
+                }
+                else {
+                    console(log.error());
+                }
+            });
+			       break;
+			        default:
+			       console.log("abc");
+	       }*/
+			       
+   });
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+//restService.post('/echo',pprice);
+
+restService.post('/slack-test', function(req, res) {
+
+    var slack_message = {
+        "text": "Details of JIRA board for Browse and Commerce",
+        "attachments": [{
+            "title": "JIRA Board",
+            "title_link": "http://www.google.com",
+            "color": "#36a64f",
+
+            "fields": [{
+                "title": "Epic Count",
+                "value": "50",
+                "short": "false"
+            }, {
+                "title": "Story Count",
+                "value": "40",
+                "short": "false"
+            }],
+
+            "thumb_url": "https://stiltsoft.com/blog/wp-content/uploads/2016/01/5.jira_.png"
+        }, {
+            "title": "Story status count",
+            "title_link": "http://www.google.com",
+            "color": "#f49e42",
+
+            "fields": [{
+                "title": "Not started",
+                "value": "50",
+                "short": "false"
+            }, {
+                "title": "Development",
+                "value": "40",
+                "short": "false"
+            }, {
+                "title": "Development",
+                "value": "40",
+                "short": "false"
+            }, {
+                "title": "Development",
+                "value": "40",
+                "short": "false"
+            }]
+        }]
+    }
+    return res.json({
+        speech: "speech",
+        displayText: "speech",
+        source: 'webhook-echo-sample',
+        data: {
+            "slack": slack_message
+        }
+    });
+});
+
+
+
+
+restService.listen((process.env.PORT || 8000), function() {
+    console.log("Server up and listening");
+});
