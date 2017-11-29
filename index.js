@@ -31,7 +31,7 @@ restService.post('/echo', function (req, res) {
               ],
               'source': 'dimwei.com'});
 	}
-  if(req.body.result.action=='demo1')
+  if(req.body.result.action=='price')
    {
    var request = require('request');
             request({
