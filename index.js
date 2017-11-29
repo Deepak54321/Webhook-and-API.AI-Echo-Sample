@@ -42,26 +42,21 @@ restService.post('/echo', function (req, res) {
                     var responseCode=result.responseData;
                     var productPrice=responseCode.product_price;
                     var price=productPrice[0].price +'Rs';
-			        res.json({'speech': 'price',
-              'displayText': 'price',
+					   res.json({'speech': 'When',
+              'displayText': 'When',
               'messages': 
               [
-		      {
+			   {
                    'type':0,
                    'speech':price
                },
-                {'title': 'Please provide your feedback',
+               {'title': 'Please provide your feedback',
                 'replies': ['Feedback'],
-                'type': 2}],
-              ],
+					   'type': 2}],
               'source': 'dimwei.com'});
-                }
-                else {
-                    console(log.error());
-                }
-            });
-   
  
+  }
+			})
   }
 
 			       
