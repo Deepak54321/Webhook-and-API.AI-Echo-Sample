@@ -31,8 +31,8 @@ restService.post('/echo', function (req, res) {
               ],
               'source': 'dimwei.com'});
 	}
-	 if(req.body.result.action=='demo1')
-  {
+  if(req.body.result.action=='demo1')
+   {
    var request = require('request');
             request({
                 url:'http://www.yamaha-motor-india.com/iym-web-api//51DCDFC2A2BC9/statewiseprice/getprice?product_profile_id=salutorxspcol&state_id=240'
@@ -42,24 +42,23 @@ restService.post('/echo', function (req, res) {
                     var responseCode=result.responseData;
                     var productPrice=responseCode.product_price;
                     var price=productPrice[0].price +'Rs';
-					   res.json({'speech': 'When',
+		
+			        res.json({'speech': 'When',
               'displayText': 'When',
               'messages': 
               [
-			   {
-                   'type':0,
-                   'speech':price
-               },
-               {'title': 'Please provide your feedback',
-                'replies': ['Feedback'],
-					   'type': 2}],
+               {'title': 'Please choose one of the following options',
+                'replies': ['Product Enquiry',
+                            'Test Drive',
+                            'Complaints',
+                            'Yamaha News'],
+                'type': 2}
+              ],
               'source': 'dimwei.com'});
  
   }
 			})
-  }
-
-			       
+  }		       
    });
 
 //restService.post('/echo',pprice);
